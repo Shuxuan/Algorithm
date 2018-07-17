@@ -1,6 +1,5 @@
 package test.study.algorithm.Array;
 
-import com.sun.tools.javac.util.Assert;
 import main.study.algorithm.Array.TwoSum_1;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

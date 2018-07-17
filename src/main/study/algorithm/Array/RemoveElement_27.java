@@ -1,5 +1,7 @@
 package main.study.algorithm.Array;
 
+import java.util.Arrays;
+
 /**
  *
  * https://leetcode.com/problems/remove-element/description/
@@ -46,8 +48,25 @@ package main.study.algorithm.Array;
 public class RemoveElement_27 {
 
     public int removeElement(int[] nums, int val) {
-        int rst = 0;
 
-        return rst;
+        Arrays.sort(nums);
+        int start = 0;
+        while (start < nums.length && nums[start] != val)
+            start++;
+
+        if (start < nums.length && nums[start] == val) {
+            int end = start + 1;
+            while (end < nums.length && nums[end] == nums[start]) {
+                end++;
+            }
+
+            while (end < nums.length) {
+                nums[start] = nums[end];
+                start++;
+                end++;
+            }
+        }
+
+        return start;
     }
 }

@@ -32,10 +32,6 @@ public class FindMinimuminRotatedSortedArray_153 {
             return rst;
         }
 
-        if (nums.length == 1) {
-            return nums[0];
-        }
-
         int l = 0;
         int r = nums.length - 1;
 

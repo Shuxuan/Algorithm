@@ -42,4 +42,13 @@ class FindMinimuminRotatedSortedArray_153Test {
         int rst = myclass.findMin(nums);
         assertEquals(expected, rst);
     }
+
+    @Test
+    void findMin5() {
+        int[] nums = {1};
+        int expected = 1;
+        FindMinimuminRotatedSortedArray_153 myclass = new FindMinimuminRotatedSortedArray_153();
+        int rst = myclass.findMin(nums);
+        assertEquals(expected, rst);
+    }
 }

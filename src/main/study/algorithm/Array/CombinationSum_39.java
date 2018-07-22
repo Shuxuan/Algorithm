@@ -39,7 +39,7 @@ public class CombinationSum_39 {
 
 
     public static void main(String[] args) {
-        int[] nums = {2, 3, 6, 7};
+        int[] nums = {2, 2, 3, 6, 7};
         int target = 7;
         CombinationSum_39 myclass = new CombinationSum_39();
         List<List<Integer>> rst = myclass.combinationSum(nums, 7);
@@ -53,6 +53,7 @@ public class CombinationSum_39 {
         }
     }
 
+    //递归
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> rst = new ArrayList<>();
 
@@ -63,21 +64,39 @@ public class CombinationSum_39 {
         Arrays.sort(candidates);
 
         List<Integer> list = new ArrayList<>();
-        helper(candidates, rst, list, target, 0);
+        dfs(candidates, rst, list, target, 0);
 
         return rst;
     }
 
-    private void helper(int[] candidates, List<List<Integer>> rst, List<Integer> list, int target, int j) {
+    private void dfs(int[] candidates, List<List<Integer>> rst, List<Integer> list, int target, int j) {
         if (target == 0) {
             rst.add(new ArrayList<>(list));
             return;
         }
 
         for (int i = j; i < candidates.length && target >= candidates[i]; i++) {
+            if (i > 0 && candidates[i] == candidates[i-1]) {
+                continue;
+            }
             list.add(candidates[i]);
-            helper(candidates, rst, list, target - candidates[i], i);
+            dfs(candidates, rst, list, target - candidates[i], i);
             list.remove(list.size() - 1);
         }
+    }
+
+    //非递归
+    public List<List<Integer>> combinationSum_norecursion(int[] candidates, int target) {
+        List<List<Integer>> rst = new ArrayList<>();
+
+        if (candidates == null || candidates.length == 0) {
+            return rst;
+        }
+
+        Arrays.sort(candidates);
+
+
+
+        return rst;
     }
 }

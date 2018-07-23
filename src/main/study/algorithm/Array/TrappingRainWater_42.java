@@ -23,27 +23,24 @@ public class TrappingRainWater_42 {
         }
 
         int[] maxL = new int[height.length];
-
         int[] maxR = new int[height.length];
-
 
         int l = height[0];
         int r = height[height.length-1];
 
         for (int i = 0; i < height.length; i++) {
-            maxL[i] = l;
             l = Math.max(l, height[i]);
+            maxL[i] = l;
         }
 
         for (int i = height.length - 1; i >= 0; i--) {
-            maxR[i] = r;
             r = Math.max(r, height[i]);
+            maxR[i] = r;
         }
 
         for (int i = 0; i < height.length; i++) {
             int min = Math.min(maxL[i], maxR[i]);
-
-            rst += (min > height[i]) ? min - height[i] : 0;
+            rst += min - height[i];
         }
 
         return rst;

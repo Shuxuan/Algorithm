@@ -23,4 +23,37 @@ package main.study.algorithm.Array;
  */
 
 public class JumpGameII_45 {
+
+    public int jump(int[] nums) {
+        if (nums == null || nums.length < 2) {
+            return 0;
+        }
+        
+       //greedy, each time, calculate the max range to achieve,
+
+        int rst = 0;
+
+        int i = 0;
+        int max = 0;
+        int temp = 0;
+
+        while (i < nums.length) {
+            if (temp >= nums.length-1) break;
+            while (i <= temp) {
+                max = Math.max(max, i + nums[i]);
+                i++;
+            }
+            rst++;
+            temp = max;
+        }
+        return rst;
+
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {2,3,1,1,4};
+        JumpGameII_45 myObj = new JumpGameII_45();
+        int rst = myObj.jump(nums);
+        System.out.println(rst);
+    }
 }

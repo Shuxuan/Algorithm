@@ -1,8 +1,6 @@
 package main.study.algorithm.Array;
 
-import sun.jvm.hotspot.utilities.Interval;
-
-import java.util.List;
+import java.util.*;
 
 /**
  *
@@ -25,5 +23,31 @@ public class MergeIntervals_56 {
 
     public List<Interval> merge(List<Interval> intervals) {
 
+        Collections.sort(intervals, new IntervalComparator());
+        LinkedList<Interval> rst = new LinkedList<>();
+
+        if (intervals == null || intervals.size() == 0) {
+            return rst;
+        }
+
+        for (Interval interval : intervals) {
+            if (rst.isEmpty() || rst.getLast().end < interval.start) {
+                rst.add(interval);
+            } else {
+                // start to merge
+                rst.getLast().end = Math.max(rst.getLast().end, interval.end);
+            }
+        }
+
+
+
+        return rst;
+    }
+
+    private class IntervalComparator implements Comparator<Interval> {
+        @Override
+        public int compare(Interval a, Interval b) {
+            return a.start < b.start ? -1 : a.start == b.start ? 0 : 1;
+        }
     }
 }

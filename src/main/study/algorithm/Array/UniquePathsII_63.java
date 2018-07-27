@@ -38,37 +38,51 @@ public class UniquePathsII_63 {
         if (obstacleGrid.length == 0 || obstacleGrid[0].length == 0) {
             return 0;
         }
+
+        if (obstacleGrid[0][0] != 0) {
+            return 0;
+        }
+
         int m = obstacleGrid.length;
         int n = obstacleGrid[0].length;
 
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (obstacleGrid[i][j] == 1)
-                    obstacleGrid[i][j] = Integer.MAX_VALUE;
-            }
+        int[] rst = new int[n];
+
+        rst[0] = obstacleGrid[0][0] != 0? 0 : 1;
+
+        for (int i = 1; i < n; i++) {
+            rst[i] = obstacleGrid[0][i] != 0 || rst[i-1] == 0 ? 0 : 1;
         }
 
         for (int i = 1; i < m; i++) {
-            if (obstacleGrid[m-1][0] == Integer.MAX_VALUE) {
-                obstacleGrid[m][0] = Integer.MAX_VALUE;
-            }
-        }
-
-        for (int j = 1; j < n; j++) {
-            if (obstacleGrid[0][j-1] == Integer.MAX_VALUE) {
-                obstacleGrid[0][j] = Integer.MAX_VALUE;
-            }
-        }
-
-        for (int i = 1; i < m; i++) {
+            rst[0] = rst[0] == 0 ? 0 : obstacleGrid[i][0] != 0 ? 0:1;
             for (int j = 1; j < n; j++) {
-                if (obstacleGrid[i][j] != Integer.MAX_VALUE) {
-
-                }
+                rst[j] = obstacleGrid[i][j] != 0 ? 0 : rst[j-1] + rst[j];
             }
         }
 
-        return obstacleGrid[m-1][n-1] == Integer.MAX_VALUE ? 0 : obstacleGrid[m-1][n-1];
+
+
+        return rst[n-1];
     }
 
+    public static void main(String[] args) {
+        int[][] obstacleGrid = {{0,0,0},{0,1,0},{0,0,0}};
+
+        UniquePathsII_63 myObj = new UniquePathsII_63();
+        int rst = myObj.uniquePathsWithObstacles(obstacleGrid);
+
+        System.out.println(rst);
+
+        int[][] nums = {{0}};
+
+        System.out.println(myObj.uniquePathsWithObstacles(nums));
+
+        int[][] nums1 = {{1}};
+        System.out.println(myObj.uniquePathsWithObstacles(nums1));
+
+        int[][] nums2 = {{0,1}};
+        System.out.println(myObj.uniquePathsWithObstacles(nums2));
+
+    }
 }

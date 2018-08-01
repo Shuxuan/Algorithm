@@ -22,10 +22,21 @@ public class SwapNodesinPairs_24 {
 
         ListNode helper = new ListNode(0);
         helper.next = head;
-        ListNode pre = head;
-        while (pre != null && pre.next != null) {
+        ListNode pre = helper;
+        ListNode cur = head;
+        while (cur != null && cur.next != null) {
+            //save 3rd
+            ListNode next = cur.next.next;
+
+            pre.next = cur.next;
+            cur.next.next = cur;
+            cur.next = next;
+            pre = cur;
+            cur = next;
 
         }
+
+        return helper.next;
     }
 
 }

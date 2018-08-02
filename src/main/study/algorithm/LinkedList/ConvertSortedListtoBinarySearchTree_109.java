@@ -1,5 +1,7 @@
 package main.study.algorithm.LinkedList;
 
+import main.study.algorithm.Tree.TreeNode;
+
 /**
  * https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/description/
  *

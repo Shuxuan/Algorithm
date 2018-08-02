@@ -1,4 +1,4 @@
-package main.study.algorithm.LinkedList;
+package main.study.algorithm.Tree;
 
 public class TreeNode {
     public int val;

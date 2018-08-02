@@ -29,7 +29,7 @@ public class PartitionList_86 {
         ListNode insertPos = helper;
 
         while (insertPos != null && insertPos.next != null && insertPos.next.val < x) {
-                insertPos = insertPos.next;
+            insertPos = insertPos.next;
         }
 
         if (insertPos == null) {
@@ -46,9 +46,9 @@ public class PartitionList_86 {
          */
 
         ListNode pre = insertPos.next;
-        ListNode cur = pre.next;
+        ListNode cur = null;
         while (pre != null) {
-
+            cur = pre.next;
             if (cur != null && cur.val < x) {
                 ListNode next = cur.next;
                 pre.next = next;
@@ -58,8 +58,9 @@ public class PartitionList_86 {
                 next = insertPos.next;
                 insertPos.next = cur;
                 cur.next = next;
-            }
-            pre = pre.next;
+                insertPos = insertPos.next;
+            } else
+                pre = pre.next;
         }
 
         return helper.next;
@@ -74,6 +75,12 @@ public class PartitionList_86 {
         ListNode rst = myObj.partition(head, 3);
 
         Util.printList(rst);
+
+        System.out.println("#############################");
+        int[] nums1 = {1,4,3,2,5,2};
+        ListNode head1 = Util.createList(nums1);
+        ListNode rst1 = myObj.partition(head1, 3);
+        Util.printList(rst1);
     }
 
 }

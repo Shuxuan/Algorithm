@@ -24,27 +24,20 @@ import java.util.Stack;
  */
 public class BinaryTreeInorderTraversal_94 {
 
-    public List<Integer> inorderTraversal(TreeNode root) {
-        List<Integer> rst = new ArrayList<>();
-        if (root == null) {
-            return rst;
-        }
-
+    public ArrayList<Integer> inorderTraversal(TreeNode root) {
         Stack<TreeNode> stack = new Stack<>();
-
-        TreeNode cur = root;
-        while (cur != null ) {
-            stack.push(cur);
-            cur = cur.left;
+        ArrayList<Integer> result = new ArrayList<>();
+        TreeNode curt = root;
+        while (curt != null || !stack.empty()) {
+            while (curt != null) {
+                stack.add(curt);
+                curt = curt.left;
+            }
+            curt = stack.pop();
+            result.add(curt.val);
+            curt = curt.right;
         }
-
-        while (!stack.isEmpty()) {
-            TreeNode node = stack.pop();
-            rst.add(node.val);
-            if (node.right != null)
-                stack.push(node.right);
-        }
-        return rst;
+        return result;
     }
 
     public List<Integer> inorderTraversal_recursion(TreeNode root) {

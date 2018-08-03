@@ -28,4 +28,55 @@ package main.study.algorithm.LinkedList;
  *
  */
 public class InsertionSortList_147 {
+
+    public ListNode insertionSortList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        ListNode helper = new ListNode(0);
+        helper.next = head;
+
+        ListNode cur = head.next;
+        head.next = null;
+        while (cur != null) {
+            // insert cur into helper
+            // save next of cur first
+            ListNode next = cur.next;
+            cur.next = null;
+
+            ListNode pre = helper;
+            ListNode node = pre.next;
+            while (node != null) {
+                if (cur.val < node.val) {
+                    //insert cur before node
+                    pre.next = cur;
+                    cur.next = node;
+                    break;
+                }
+                pre = node;
+                node = node.next;
+
+            }
+            if (node == null) {
+                pre.next = cur;
+            }
+
+            cur = next;
+        }
+
+        return helper.next;
+
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {4,2,1,3};
+        ListNode head = Util.createList(nums);
+
+        InsertionSortList_147 myObj = new InsertionSortList_147();
+        ListNode rst = myObj.insertionSortList(head);
+        Util.printList(rst);
+
+    }
+
 }

@@ -2,6 +2,8 @@ package main.study.algorithm.LinkedList;
 
 import main.study.algorithm.Tree.TreeNode;
 
+import java.util.ArrayList;
+
 /**
  * https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/description/
  *
@@ -24,9 +26,35 @@ import main.study.algorithm.Tree.TreeNode;
 public class ConvertSortedListtoBinarySearchTree_109 {
 
     public TreeNode sortedListToBST(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+        if (head.next == null) {
+            return new TreeNode(head.val);
+        }
 
-        return null;
+        int lenth = lenth(head);
+        ArrayList<ListNode> list = new ArrayList<ListNode>();
+        list.add(head);
+        TreeNode root = helper(list, 0, lenth-1);
 
+        return root;
+
+    }
+
+    private TreeNode helper(ArrayList<ListNode> list, int l, int r) {
+        if (l > r)
+            return null;
+        int m = (l + r) / 2;
+        TreeNode left = helper(list, l, m-1);
+        TreeNode root = new TreeNode(list.get(0).val);
+        root.left = left;
+        list.set(0,list.get(0).next);
+        TreeNode right = helper(list, m+1, r);
+
+        root.right = right;
+
+        return root;
     }
 
     public int lenth(ListNode head) {
@@ -39,15 +67,7 @@ public class ConvertSortedListtoBinarySearchTree_109 {
         }
         return len;
     }
-    public TreeNode helper(ListNode head, int l, int r) {
-        if (head == null || head.next == null) {
-            return new TreeNode(head.val);
-        }
 
-
-
-        return null;
-    }
 
     public static void main(String[] args) {
         int[] nums = {-10, -3, 0, 5, 9};

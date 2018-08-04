@@ -1,5 +1,7 @@
 package main.study.algorithm.LinkedList;
 
+import java.util.*;
+
 /**
  * https://leetcode.com/problems/linked-list-components/description/
  *
@@ -33,4 +35,31 @@ package main.study.algorithm.LinkedList;
  * G is a subset of all values in the linked list.
  */
 public class LinkedListComponents_817 {
+    public int numComponents(ListNode head, int[] G) {
+        Set<Integer> Gset = new HashSet();
+        for (int x: G) Gset.add(x);
+
+        ListNode cur = head;
+        int ans = 0;
+
+        while (cur != null) {
+            if (Gset.contains(cur.val) &&
+                    (cur.next == null || !Gset.contains(cur.next.val)))
+                ans++;
+            cur = cur.next;
+        }
+
+        return ans;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {0,1,2,3,4};
+        ListNode head = Util.createList(nums);
+        int[] G = {0,3,1,4};
+        LinkedListComponents_817 myObj = new LinkedListComponents_817();
+        int rst = myObj.numComponents(head, G);
+
+        System.out.println(rst);
+
+    }
 }

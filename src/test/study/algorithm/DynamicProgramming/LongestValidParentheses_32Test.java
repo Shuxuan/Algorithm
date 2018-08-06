@@ -66,4 +66,24 @@ class LongestValidParentheses_32Test {
         System.out.println(rst);
         assertEquals(22, rst);
     }
+
+    @Test
+    void longestValidParentheses7() {
+        String s = ")()(((())))(";
+        LongestValidParentheses_32 myObj = new LongestValidParentheses_32();
+        int rst = myObj.longestValidParentheses(s);
+
+        System.out.println(rst);
+        assertEquals(10, rst);
+    }
+
+    @Test
+    void longestValidParentheses8() {
+        String s = "(()()(())((";
+        LongestValidParentheses_32 myObj = new LongestValidParentheses_32();
+        int rst = myObj.longestValidParentheses(s);
+
+        System.out.println(rst);
+        assertEquals(8, rst);
+    }
 }

@@ -31,8 +31,7 @@ public class LongestValidParentheses_32 {
         /**
          * f[i][j]为true的情况是3种：
          * * ([True]) 头尾字符是对称的括号，中间也是
-         * [True]() 结尾俩个是对称的括号，前面也是
-         * ()[True] 头部俩个是堆成的括号，后面也是
+         * [i,k] [k+1,j]
          *
          */
 

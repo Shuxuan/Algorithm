@@ -1,5 +1,8 @@
 package main.study.algorithm.DynamicProgramming;
 
+import java.util.HashMap;
+import java.util.Stack;
+
 /**
  * https://leetcode.com/problems/longest-valid-parentheses/description/
  *
@@ -25,41 +28,26 @@ public class LongestValidParentheses_32 {
         }
 
         int max = 0;
-
         int n = s.length();
+        HashMap<Integer, Integer> map = new HashMap<>();
 
-        /**
-         * f[i][j]为true的情况是3种：
-         * * ([True]) 头尾字符是对称的括号，中间也是
-         * [i,k] [k+1,j]
-         *
-         */
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < n; i++) {
+            if (s.charAt(i) == '(')
+                stack.push(i);
+            else {
+                if (!stack.isEmpty()) {
+                    int j = stack.pop();
+                    if (map.containsKey(j-1)) {
+                        int start = map.get(j-1);
+                        map.put(i, start);
+                        max = Math.max(max, i - start +1);
 
-        boolean[][] f = new boolean[n][n];
-        for (int j = 1; j < n; j++) {
-            for (int i = 0; i + j < n; i++) {
-                if (s.charAt(i+j) == '(')
-                    continue;
-                if (j == 1 ){
-                   if(s.charAt(i) == '(' && s.charAt(i+j) == ')') {
-                        f[i][i+j] = true;
-                }
+                    }else {
+                        map.put(i, j);
+                        max = Math.max(max, i - j +1);
 
-                } else {
-                    if (f[i][i+1] && f[i+2][i+j]) {
-                        f[i][i+j] = true;
                     }
-                    if (f[i][i+j-2] && f[i+j-1][i+j]) {
-                        f[i][i+j] = true;
-                    }
-                    if (f[i+1][i+j-1] && s.charAt(i) == '(' && s.charAt(i+j) == ')') {
-                        f[i][i+j] = true;
-                    }
-
-                }
-
-                if (f[i][i+j]) {
-                    max = Math.max(max, j+1);
                 }
             }
         }
@@ -68,7 +56,7 @@ public class LongestValidParentheses_32 {
     }
 
     public static void main(String[] args) {
-        String s = "(()";
+        String s = "(()()(())((";
         LongestValidParentheses_32 myObj = new LongestValidParentheses_32();
         int rst = myObj.longestValidParentheses(s);
 

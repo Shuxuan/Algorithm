@@ -50,6 +50,66 @@ package main.study.algorithm.DynamicProgramming;
  */
 public class RegularExpressionMatching_10 {
     public boolean isMatch(String s, String p) {
+        /**
+         * f[i][j] 代表s的第1到第i个字符， 和p的第1到第j个字符的match 结果
+         *
+         * f[0][0] s and p both empty string, f[0][0] = true;
+         *
+         * if （s[i] == p[j] || p[j] == '.'）, then f[i][j] = f[i-1][j-1], i， j start from 1，
+         *
+         * if p[j] == '*',
+         * consider 0 occurrence, f[i][j] = f[i][j-2]
+         * consider 1 or more occurence, if s[i] == p[j-1] || p[j-1] == '.', f[i][j] = f[i-1][j]
+         *
+         * else f[i][j] = false (default is false)
+         */
+        if (s == null || p == null) {
+            return false;
+        }
+
+        int m = s.length();
+        int n = p.length();
+        boolean[][] f = new boolean[m+1][n+1];
+        f[0][0] = true;
+
+
+        /**
+         * f[i][0] = false (i >= 1)
+         * f[0][j] = false (j >= 1), if pattern is like a*b*c*, f[0][j] = true;
+         */
+
+        if (p.length() > 0 && p.length() % 2 == 0) {
+            boolean starFlag = true;
+            for (int i = 1; i < n+1; i = i + 2) {
+                if (p.charAt(i) != '*')  {
+                    starFlag = false;
+                    break;
+                }
+            }
+
+            if (starFlag) {
+                for (int i = 1; i < n+1; i++) {
+                    f[0][i] = true;
+                }
+            }
+        }
+
+        for (int i = 1; i < m + 1; i++) {
+            for (int j = 1; j < n + 1; j++) {
+                if (s.charAt(i-1) == p.charAt(j-1) || p.charAt(j-1) == '.') {
+                    f[i][j] = f[i-1][j-1];
+                } else if (p.charAt(j-1) == '*') {
+                    if (s.charAt(i-1) == p.charAt(j-2) || p.charAt(j-2) == '.') {
+                        f[i][j] = f[i-1][j];
+                    } else {
+                        f[i][j] = f[i][j-2];
+                    }
+                }
+            }
+        }
+
+        return f[m][n];
 
     }
+
 }

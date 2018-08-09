@@ -2,6 +2,7 @@ package main.study.algorithm.DynamicProgramming;
 
 import main.study.algorithm.Tree.TreeNode;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,30 +35,34 @@ import java.util.List;
  */
 public class UniqueBinarySearchTreesII_95 {
     public List<TreeNode> generateTrees(int n) {
-        List<TreeNode> rst = new LinkedList<>();
-        if (n == 0) {
-            return rst;
-        }
-        //helper(rst, 1, n);
-        return rst;
+
+        if (n <= 0)
+            return new ArrayList<>();
+
+        return dfs(1, n);
     }
 
-    private TreeNode helper(int start, int end) {
-        if (start < end) {
-            return null;
+    private List<TreeNode> dfs(int start, int end) {
+        List<TreeNode> rst = new ArrayList<>();
+
+        if (start > end) {
+            rst.add(null);
+            return rst;
         }
 
-        if (start == end) {
-            return new TreeNode(start);
+        for (int i = start; i <= end; i++) {
+            List<TreeNode> left = dfs(start, i-1);
+            List<TreeNode> right = dfs(i+1, end);
+            for (int j = 0; j < left.size(); j++) {
+                for (int k = 0; k < right.size(); k++) {
+                    TreeNode root = new TreeNode(i);
+                    root.left = left.get(j);
+                    root.right = right.get(k);
+                    rst.add(root);
+                }
+            }
         }
 
-        int m = (start + end) / 2;
-        TreeNode root = new TreeNode(m);
-        TreeNode left = helper(start, m-1);
-        TreeNode right = helper((m+1, end));
-        root.left = left;
-        root.right = right;
-
-        return root;
+        return rst;
     }
 }

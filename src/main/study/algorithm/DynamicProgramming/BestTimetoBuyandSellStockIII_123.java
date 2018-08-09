@@ -31,6 +31,38 @@ package main.study.algorithm.DynamicProgramming;
 public class BestTimetoBuyandSellStockIII_123 {
 
     public int maxProfit(int[] prices) {
+        if(prices == null || prices.length == 0) {
+            return 0;
+        }
+
+        int length = prices.length;
+        int[] left = new int[length];
+        int[] right = new int[length];
+
+        left[0] = 0;
+        int min = prices[0];
+        for (int i = 1; i < length; i++) {
+            left[i] = Math.max(left[i-1], prices[i] - min);
+
+            min = Math.min(min, prices[i]);
+        }
+
+        int max = prices[length-1];
+
+        for (int i = length - 2; i >= 0; i--) {
+            right[i] = Math.max(max - prices[i], right[i+1]);
+            max = Math.max(max, prices[i]);
+        }
+
+        max = 0;
+        for (int i = 0; i < length; i++) {
+            max = Math.max( left[i] + right[i], max);
+        }
+
+        return max;
+    }
+
+    public int maxProfit2(int[] prices) {
         /**
          * 把数组切成俩段，寻找每一个sub array的一次transaction的最大值
          * 然后max = max（max，m1+m2）

@@ -26,4 +26,44 @@ package main.study.algorithm.DynamicProgramming;
  * You may assume that row1 ≤ row2 and col1 ≤ col2.
  */
 public class Range_Sum_Query_2D_Immutable_304 {
+
+}
+
+class NumMatrix {
+    int[][] sum = null;
+    int[][] matrix = null;
+    public NumMatrix(int[][] matrix) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return;
+        }
+
+        this.matrix = matrix;
+        sum = new int[matrix.length][matrix[0].length];
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                if (j == 0) {
+                    sum[i][j] = matrix[i][j];
+                } else
+                    sum[i][j] = sum[i][j-1] + matrix[i][j];
+            }
+        }
+
+    }
+
+    public int sumRegion(int row1, int col1, int row2, int col2) {
+        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
+            return 0;
+        }
+        int rst = 0;
+        for (int i = row1; i <= row2; i++) {
+            rst += col1 == 0 ? sum[i][col2] : (sum[i][col2] - sum[i][col1-1]);
+        }
+
+        return rst;
+    }
+
+    public static void main(String[] args) {
+
+    }
 }

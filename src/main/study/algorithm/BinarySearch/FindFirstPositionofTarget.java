@@ -21,10 +21,12 @@ public class FindFirstPositionofTarget {
         int end = nums.length - 1;
         while (start + 1 < end) {
             int mid = (start + end) >> 1;
-            if (nums[mid] >= target) {
+            if (nums[mid] > target) {
                 end = mid;
-            } else
+            } else if (nums[mid] < target) {
                 start = mid;
+            } else
+                end = mid;
         }
         if (nums[start] == target)
             rst = start;

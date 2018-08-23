@@ -52,8 +52,48 @@ public class RecoverBinarySearchTree_99 {
 
     public void recoverTree(TreeNode root) {
         //inorder traversal
+        TreeNode first = null;
+        TreeNode second = null;
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode pre = new TreeNode(Integer.MIN_VALUE);
+        while (root != null || !stack.isEmpty()) {
+            while(root != null) {
+                stack.push(root);
+                root = root.left;
+            }
 
-        Stack<Integer> stack = new Stack<>();
+            root = stack.pop();
+            System.out.println(root.val);
+            if (pre != null && root.val<= pre.val) {
+                if (first == null) {
+                    first = pre;
+                    second = root;
+                }else {
+                    second = root;
+                    break;
+                }
+            }
+            pre = root;
+            root = root.right;
 
+        }
+
+        if (first != null && second != null) {
+            int tmp = first.val;
+            first.val = second.val;
+            second.val = tmp;
+        }
+
+    }
+
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(1);
+        TreeNode left = new TreeNode(3);
+        root.left = left;
+        TreeNode right = new TreeNode(2);
+        left.right = right;
+
+        RecoverBinarySearchTree_99 myObj = new RecoverBinarySearchTree_99();
+        myObj.recoverTree(root);
     }
 }

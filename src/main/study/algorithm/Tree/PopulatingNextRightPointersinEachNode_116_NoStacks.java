@@ -1,7 +1,5 @@
 package main.study.algorithm.Tree;
 
-import apple.laf.JRSUIUtils;
-
 import java.util.Stack;
 
 /**
@@ -41,7 +39,7 @@ import java.util.Stack;
  *  / \  / \
  * 4->5->6->7 -> NULL
  */
-public class PopulatingNextRightPointersinEachNode_116 {
+public class PopulatingNextRightPointersinEachNode_116_NoStacks {
 
     public void connect(TreeLinkNode root) {
         /**
@@ -53,32 +51,25 @@ public class PopulatingNextRightPointersinEachNode_116 {
             return;
         }
 
-        Stack<TreeLinkNode> stack = new Stack<>();
-        stack.push(root);
-
-        Stack<TreeLinkNode> stack2 = new Stack<>();
-        while (!stack.isEmpty() || !stack2.isEmpty()) {
-
-            while (!stack.isEmpty()) {
-                TreeLinkNode cur = stack.pop();
-                if (!stack.isEmpty()) {
-                    cur.next = stack.peek();
-                }
-
+        TreeLinkNode levelStart = root;
+        while (levelStart != null) {
+            TreeLinkNode cur = levelStart;
+            while (cur != null) {
                 if (cur.left != null) {
-                    stack2.push(cur.left);
+                    cur.left.next = cur.right;
                 }
 
-                if (cur.right != null) {
-                    stack2.push(cur.right);
+                if (cur.right!= null && cur.next != null) {
+                    cur.right.next = cur.next.left;
                 }
+
+                cur = cur.next;
             }
 
-            // move stack2 element to stack1
-            while (!stack2.isEmpty())
-                stack.push(stack2.pop());
-
+            levelStart = levelStart.left;
         }
+
+
 
 
     }
@@ -90,7 +81,7 @@ public class PopulatingNextRightPointersinEachNode_116 {
         n1.left = n2;
         n1.right = n3;
 
-        PopulatingNextRightPointersinEachNode_116 myObj = new PopulatingNextRightPointersinEachNode_116();
+        PopulatingNextRightPointersinEachNode_116_NoStacks myObj = new PopulatingNextRightPointersinEachNode_116_NoStacks();
         myObj.connect(n1);
     }
 

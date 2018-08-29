@@ -1,7 +1,5 @@
 package main.study.algorithm.Tree;
 
-import apple.laf.JRSUIUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -32,7 +30,7 @@ import java.util.Stack;
  *          \
  *           6
  */
-public class FlattenBinaryTreetoLinkedList_114 {
+public class FlattenBinaryTreetoLinkedList_114_bruteforce {
     TreeNode prev = null;
 
     public void flatten(TreeNode root) {
@@ -104,7 +102,7 @@ public class FlattenBinaryTreetoLinkedList_114 {
         node2.right = node4;
         node5.right = node6;
 
-        FlattenBinaryTreetoLinkedList_114 myObj = new FlattenBinaryTreetoLinkedList_114();
+        FlattenBinaryTreetoLinkedList_114_bruteforce myObj = new FlattenBinaryTreetoLinkedList_114_bruteforce();
         myObj.flatten(node1);
     }
 

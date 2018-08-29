@@ -1,9 +1,5 @@
 package main.study.algorithm.Tree;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
-
 /**
  * https://leetcode.com/problems/flatten-binary-tree-to-linked-list/description/
  *
@@ -30,20 +26,16 @@ import java.util.Stack;
  *          \
  *           6
  */
-public class FlattenBinaryTreetoLinkedList_114_inorder {
+public class FlattenBinaryTreetoLinkedList_114_postorder {
     TreeNode prev = null;
     public void flatten(TreeNode root) {
         if(root == null) return;
-        if (prev != null ) {
-            prev.right = root;
-        }
-        prev = root;
-        TreeNode left = root.left;
-        TreeNode right = root.right;
 
+        flatten(root.right);
+        flatten(root.left);
+        root.right = prev;
         root.left = null;
-        flatten(left);
-        flatten(right);
+        prev = root;
 
 
     }
@@ -61,7 +53,7 @@ public class FlattenBinaryTreetoLinkedList_114_inorder {
         node2.right = node4;
         node5.right = node6;
 
-        FlattenBinaryTreetoLinkedList_114_inorder myObj = new FlattenBinaryTreetoLinkedList_114_inorder();
+        FlattenBinaryTreetoLinkedList_114_postorder myObj = new FlattenBinaryTreetoLinkedList_114_postorder();
         myObj.flatten(node1);
     }
 

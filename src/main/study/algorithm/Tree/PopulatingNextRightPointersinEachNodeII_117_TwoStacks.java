@@ -38,7 +38,7 @@ import java.util.Stack;
  *  / \    \
  * 4-> 5 -> 7 -> NULL
  */
-public class PopulatingNextRightPointersinEachNodeII_117_TwoStack {
+public class PopulatingNextRightPointersinEachNodeII_117_TwoStacks {
 
     public void connect(TreeLinkNode root) {
         /**

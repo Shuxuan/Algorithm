@@ -72,11 +72,18 @@ public class PopulatingNextRightPointersinEachNodeII_117_TwoStack {
             }
 
             // move stack2 element to stack1
-            while (!stack2.isEmpty())
-                stack.push(stack2.pop());
+            while (!stack2.isEmpty()){
+                TreeLinkNode cur = stack2.pop();
+                if (!stack2.isEmpty()) {
+                    stack2.peek().next = cur;
+                }
 
+                if (cur.right != null)
+                    stack.push(cur.right);
+                if (cur.left != null) {
+                    stack.push(cur.left);
+                }
+            }
         }
-
-
     }
 }

@@ -40,36 +40,19 @@ package main.study.algorithm.Tree;
 public class PopulatingNextRightPointersinEachNode_116_LevelTraverse {
 
     public void connect(TreeLinkNode root) {
-        /**
-         * two stacks. one is updating the next link
-         * the other is to store the next level elements
-         */
 
-        if (root == null) {
-            return;
-        }
+        TreeLinkNode tempChild = new TreeLinkNode(0);
+        while(root != null){
 
-        TreeLinkNode levelStart = root;
-        while (levelStart != null) {
-            TreeLinkNode cur = levelStart;
-            while (cur != null) {
-                if (cur.left != null) {
-                    cur.left.next = cur.right;
-                }
-
-                if (cur.right!= null && cur.next != null) {
-                    cur.right.next = cur.next.left;
-                }
-
-                cur = cur.next;
+            TreeLinkNode currentChild = tempChild;
+            while(root!=null){
+                if(root.left != null) { currentChild.next = root.left; currentChild = currentChild.next;}
+                if(root.right != null) { currentChild.next = root.right; currentChild = currentChild.next;}
+                root = root.next;
             }
-
-            levelStart = levelStart.left;
+            root = tempChild.next;
+            tempChild.next = null;
         }
-
-
-
-
     }
 
     public static void main(String[] args) {

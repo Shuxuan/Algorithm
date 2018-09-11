@@ -32,25 +32,36 @@ import apple.laf.JRSUIUtils;
  * 3. -3 -> 11
  */
 public class PathSumIII_437 {
-    int rst = 0;
+
+    /**
+     * 这道题可以借用之前Path Sum的思想，不过它需要两层深度优先遍历。
+     *
+     * 先从头结点开始遍历，求得满足条件的路径的个数后，再分别遍历其左右子树，求得满足条件的路径再累加。
+     *
+     * 第一种方法：用队列层次遍历树的每个节点，再从每个节点开始dfs求出满足条件的路径，将所有的累加就得到结果。
+     *
+     * @param root
+     * @param sum
+     * @return
+     */
     public int pathSum(TreeNode root, int sum) {
         if (root == null) {
-            return rst;
+            return 0;
         }
 
-        if (root.val == sum) {
-            rst++;
-            System.out.println("root val : " + root.val);
-            System.out.println(rst);
-            return rst;
+        return dfs(root, sum) + pathSum(root.left, sum) + pathSum(root.right, sum);
+    }
+
+    private int dfs(TreeNode root, int sum) {
+        if (root == null) {
+            return 0;
         }
 
-        pathSum(root.left, sum - root.val);
-        pathSum(root.right, sum - root.val);
-        pathSum(root.left, sum);
-        pathSum(root.right, sum);
+        if (sum == root.val) {
+            return 1 + dfs(root.left, sum - root.val) + dfs(root.right, sum - root.val);
+        }
+        return dfs(root.left, sum - root.val) + dfs(root.right, sum - root.val);
 
-        return rst;
     }
 
     public static void main(String[] args) {

@@ -1,5 +1,7 @@
 package main.study.algorithm.Tree;
 
+import java.util.*;
+
 /**
  * https://leetcode.com/problems/find-bottom-left-tree-value/description/
  *
@@ -37,6 +39,32 @@ public class FindBottomLeftTreeValue_513 {
      */
     public int findBottomLeftValue(TreeNode root) {
 
+        if (root == null) {
+            return Integer.MIN_VALUE;
+        }
 
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        int rst = 0;
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode cur = queue.remove();
+                if (i == 0) {
+                    rst = cur.val;
+                }
+
+                if (cur.left != null) {
+                    ((LinkedList<TreeNode>) queue).add(cur.left);
+                }
+                if (cur.right != null) {
+                    ((LinkedList<TreeNode>) queue).add(cur.right);
+                }
+            }
+
+        }
+
+        return rst;
     }
 }

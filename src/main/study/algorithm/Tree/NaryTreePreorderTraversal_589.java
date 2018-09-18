@@ -1,7 +1,6 @@
 package main.study.algorithm.Tree;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * https://leetcode.com/problems/n-ary-tree-preorder-traversal/description/
@@ -20,6 +19,26 @@ import java.util.List;
 public class NaryTreePreorderTraversal_589 {
 
     public List<Integer> preorder(Node root) {
+        List<Integer> rst = new ArrayList<>();
+        if (root == null) {
+            return rst;
+        }
+
+        Stack<Node> stack = new Stack<>();
+        stack.add(root);
+        while (!stack.isEmpty()) {
+            Node cur = stack.pop();
+            rst.add(cur.val);
+            List<Node> children = cur.children;
+            for (int i = children.size() - 1; i >= 0; i--) {
+                stack.add(children.get(i));
+            }
+        }
+
+        return rst;
+    }
+
+    public List<Integer> preorder_recursion(Node root) {
         List<Integer> rst = new ArrayList<>();
         if (root == null) {
             return rst;

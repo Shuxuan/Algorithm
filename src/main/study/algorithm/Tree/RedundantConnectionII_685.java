@@ -99,7 +99,7 @@ public class RedundantConnectionII_685 {
     public int[] findRedundantDirectedConnection(int[][] edges) {
         int[] rst = new int[2];
         if (edges == null || edges.length == 0 || edges[0].length == 0) {
-            return new int[];
+            return rst;
         }
 
         father = new int[edges.length + 1];

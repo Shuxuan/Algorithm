@@ -66,7 +66,7 @@ public class WordLadder {
                     for (char c = 'a'; c <= 'z'; c++) {
                         charArray[j] = c;
                         String newWord = String.valueOf(charArray);
-                        if (wordList.contains(newWord) ){
+                        if (wordList.contains(newWord) && wordList.contains(newWord)){
                             queue.add(newWord);
                             wordList.remove(newWord);
                         }

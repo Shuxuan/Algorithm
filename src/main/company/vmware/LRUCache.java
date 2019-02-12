@@ -1,4 +1,4 @@
-package main.VMWare;
+package main.company.vmware;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;

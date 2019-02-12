@@ -1,4 +1,4 @@
-package main.VMWare;
+package main.company.vmware;
 
 import main.study.algorithm.Tree.RandomListNode;
 

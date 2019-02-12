@@ -1,7 +1,4 @@
-package main.VMWare;
-
-import java.util.ArrayList;
-import java.util.Arrays;
+package main.company.vmware;
 
 /**
  *

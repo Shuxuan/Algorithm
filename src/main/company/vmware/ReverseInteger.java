@@ -1,4 +1,4 @@
-package main.VMWare;
+package main.company.vmware;
 
 public class ReverseInteger {
     public int reverse(int x) {

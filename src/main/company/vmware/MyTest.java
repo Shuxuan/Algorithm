@@ -1,4 +1,4 @@
-package main.VMWare;
+package main.company.vmware;
 
 import java.io.*;
 import java.util.*;

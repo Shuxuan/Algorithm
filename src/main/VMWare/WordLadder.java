@@ -40,6 +40,49 @@ import java.util.*;
 public class WordLadder {
 
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+
+        if (beginWord == null || endWord == null || beginWord.equals(endWord) || !wordList.contains(endWord)) {
+            return 0;
+        }
+
+        Set<String> dict = new HashSet(wordList);
+        Set<String> sourceQueue = new HashSet();
+        Set<String> targetQueue = new HashSet();
+        Set<String> visited = new HashSet();
+
+        sourceQueue.add(beginWord);
+        targetQueue.add(endWord);
+
+        for (int len = 2; !sourceQueue.isEmpty(); len++) {
+            Set<String> transformedWordList = new HashSet();
+            for (String w : sourceQueue) {
+                for (int j = 0; j < w.length(); j++) {
+                    char[] ch = w.toCharArray();
+                    for (char c = 'a'; c <= 'z'; c++) {
+                        if (c == w.charAt(j))
+                            continue;
+                        ch[j] = c;
+                        String transforedWord = new String(ch);
+                        if (targetQueue.contains(transforedWord))
+                            return len;
+
+                        if (dict.contains(transforedWord) && visited.add(transforedWord))
+                            transformedWordList.add(transforedWord);
+                    }
+                }
+            }
+
+            sourceQueue = (transformedWordList.size() < targetQueue.size()) ? transformedWordList : targetQueue;
+            targetQueue = (sourceQueue == transformedWordList) ? targetQueue : transformedWordList;
+
+        }
+
+
+
+        return 0;
+    }
+
+    public int ladderLength2(String beginWord, String endWord, List<String> wordList) {
         int rst = 0;
         if (beginWord == null || endWord == null || beginWord.equals(endWord)) {
             return rst;
@@ -66,7 +109,7 @@ public class WordLadder {
                     for (char c = 'a'; c <= 'z'; c++) {
                         charArray[j] = c;
                         String newWord = String.valueOf(charArray);
-                        if (wordList.contains(newWord) && wordList.contains(newWord)){
+                        if (wordList.contains(newWord)){
                             queue.add(newWord);
                             wordList.remove(newWord);
                         }
@@ -79,7 +122,7 @@ public class WordLadder {
     }
 
     public static void main(String[] args) {
-/*        String beginWord = "hit";
+        String beginWord = "hit";
         String endWord = "cog";
         List<String> wordList = new ArrayList<>();
         wordList.add("hot");
@@ -87,15 +130,15 @@ public class WordLadder {
         wordList.add("dog");
         wordList.add("lot");
         wordList.add("log");
-        wordList.add("cog");*/
+        wordList.add("cog");
 
 
-        String beginWord = "a";
+/*        String beginWord = "a";
         String endWord = "c";
         List<String> wordList = new ArrayList<>();
         wordList.add("a");
         wordList.add("b");
-        wordList.add("c");
+        wordList.add("c");*/
 
 
         WordLadder myObj = new WordLadder();

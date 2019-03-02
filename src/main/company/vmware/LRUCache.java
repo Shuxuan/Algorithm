@@ -1,8 +1,8 @@
 package main.company.vmware;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 /**
  * Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and put.
@@ -15,7 +15,7 @@ import java.util.Map;
  *
  * Example:
  *
- * LRUCache cache = new LRUCache( 2  );// capacity
+ * LRUCache_LinkedHashMap cache = new LRUCache_LinkedHashMap( 2  );// capacity
  *
  * cache.put(1,1);
  * cache.put(2,2);
@@ -29,51 +29,105 @@ import java.util.Map;
  */
 public class LRUCache {
 
-    private int maxSize;
-    LinkedHashMap<Integer, Integer> map;
 
+    public static class Node {
+        int key;
+        int val;
+        Node prev;
+        Node next;
 
+        public Node() {
+            this.key = 0;
+            this.val = 0;
+        }
 
+        public Node(int k, int v) {
+            this.key = k;
+            this.val = v;
+        }
+    }
+
+    int capacity;
+    int count;
+    Node tail;
+    Node head;
+
+    Map<Integer, Node> map;
 
     public LRUCache(int capacity) {
         if (capacity <= 0) {
             throw new IllegalArgumentException("capacity <= 0");
         }
-        this.maxSize = capacity;
 
-        //初始化LinkedHashMap。
-        //第一个参数是初始容量
-        //第二个参数是填装因子，或叫加载因子
-        //第三个参数是排序模式，true表示在访问的时候进行排序，否则只在插入的时候才排序。
-        this.map = new LinkedHashMap<Integer, Integer>(0, 0.75f, true) {
-            @Override
-            protected boolean removeEldestEntry(Map.Entry<Integer,Integer> eldest) {
-                return size() > maxSize;
-            }
-        };
-
-
-    };
-
-
-
-    public int get(int key) {
-        // get the value
-
-        if (map.containsKey(key)) {
-            int value = map.get(key);
-            map.put(key, value); // update the least recent used list key
-            return value;
-
-
-        }
-
-        return -1;
+        this.capacity = capacity;
+        count = 0;
+        head = new Node();
+        tail = new Node();
+        map = new HashMap<>();
+        head.next = tail;
+        tail.prev = head;
 
     }
 
+    public int get(int key) {
+        Node node = map.get(key);
+        if (node == null) {
+            return -1;
+        }
+
+        int res = node.val;
+        update(node);
+        return res;
+    }
+
+
     public void put(int key, int value) {
-        map.put(key,value);
+        Node temp = map.get(key);
+        if (temp == null) {
+            Node node = new Node(key, value);
+            map.put(key, node);
+            add(node);
+            count++;
+        } else {
+            temp.val = value;
+            update(temp);
+        }
+
+        if (count > capacity) {
+            // evict the eldest one
+            Node toDelete = tail.prev;
+            int k = toDelete.key;
+            map.remove(k);
+            remove(toDelete);
+            count--;
+        }
+
+    }
+
+    private void update(Node node) {
+        //remove node
+        remove(node);
+        //add node to head.next
+        add(node);
+    }
+
+    private void remove(Node node) {
+        Node prev = node.prev;
+        Node next = node.next;
+        prev.next = next;
+        next.prev = prev;
+
+    }
+
+    private void add(Node node) {
+        // add node to head.next
+        Node next = head.next;
+        head.next = node;
+        node.next = next;
+        node.prev = head;
+        next.prev = node;
+    }
+    public static void main(String[] args) {
 
     }
 }
